@@ -1,38 +1,52 @@
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import javax.swing.border.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.util.Scanner;
 
 //类
 public class MainGame extends JFrame implements ActionListener {
 
-    //属性
-    private final ButtonGroup buttonGroup = new ButtonGroup();
-    private final ButtonGroup buttonGroup_1 = new ButtonGroup();
-    JRadioButton radioButton, radioButton_1, radioButton_2,
-            radioButton_3, radioButton_4, radioButton_5,
-            radioButton_6, radioButton_7;
-    private JPanel contentPane;
-    private JTextField textField;
-    private JTextField textField_1;
-    private JButton btnOk;
-    private JButton btnExit;
-    private JButton btnBack;
+    //下棋相关属性
+    private  static int N=19;
+    private int a[][]=new int[N][N];
+    private int chess;
+    private int flag;
+    private int computerX;
+    private int computerY;
+    private int playerX;
+    private int playerY;
+
+
+    //UI界面属性
+    private JPanel contentPane;//内容面板
+    private JButton button;
+
+//    private final ButtonGroup buttonGroup = new ButtonGroup();
+//    private final ButtonGroup buttonGroup_1 = new ButtonGroup();
+//    JRadioButton radioButton, radioButton_1, radioButton_2,
+//            radioButton_3, radioButton_4, radioButton_5,
+//            radioButton_6, radioButton_7;
+
+//    private JTextField textField;
+//    private JTextField textField_1;
+//    private JButton btnOk;
+//    private JButton btnExit;
+//    private JButton btnBack;
 
     //创建UI
     public MainGame() {
 
         //创建UI
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 800, 600);
+        setBounds(100, 100, 1200, 800);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
 
-        
+
 
         //设置样式
 //        JLabel label = new JLabel("\u6570\u636E\u8F6C\u6362");
