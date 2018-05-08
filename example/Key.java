@@ -1,3 +1,5 @@
+///package five_chess;
+
 import java.awt.*;
 import java.awt.event.*;
 

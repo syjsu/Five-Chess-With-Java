@@ -1,7 +1,9 @@
+//UI控件
 import javax.swing.*;
-import javax.swing.border.*;
+//画图控件
 import java.awt.*;
 import java.awt.event.*;
+//控制台输出
 import java.util.Scanner;
 
 //类
@@ -17,111 +19,138 @@ public class MainGame extends JFrame implements ActionListener {
     private int playerX;
     private int playerY;
 
-
     //UI界面属性
     private JPanel contentPane;//内容面板
     private JButton button;
-
-//    private final ButtonGroup buttonGroup = new ButtonGroup();
-//    private final ButtonGroup buttonGroup_1 = new ButtonGroup();
-//    JRadioButton radioButton, radioButton_1, radioButton_2,
-//            radioButton_3, radioButton_4, radioButton_5,
-//            radioButton_6, radioButton_7;
-
-//    private JTextField textField;
-//    private JTextField textField_1;
-//    private JButton btnOk;
-//    private JButton btnExit;
-//    private JButton btnBack;
-
-    //创建UI
+    
     public MainGame() {
 
-        //创建UI
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1200, 800);
+        //设置这个JFrame的相关信息
+        this.setTitle("五子棋游戏 - 玩得开心哈哈");// 设置窗体标题
+        this.setSize(800, 600);// 设置窗体大小
+        this.setLocation(100, 100);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+
+        //设置中间面板
         contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
+        contentPane.setLayout(new FlowLayout());
+        contentPane.setBackground(Color.LIGHT_GRAY);
+        button = new JButton();
+        //contentPane.setJButton(button);
 
+        //设置左右上下面板
+        this.add(contentPane, BorderLayout.CENTER);
+        this.add(new JButton("先手          "), BorderLayout.WEST);
+        this.add(new JButton("后手          "), BorderLayout.EAST);
+        this.add(new JButton("五子棋"), BorderLayout.NORTH);
+        this.add(new JButton("底部"), BorderLayout.SOUTH);
+    
+    }
+    
+    
+    class MyPanel extends JPanel implements MouseListener {
+        int mouseX0;
+        int mouseY0;
+        Graphics g;
+        int mouseX;
+        int mouseY;
+        JButton button;
+        Keyboard kb;
 
+        MyPanel() {
+            kb = new Keyboard();
 
+            addMouseListener(this);
+            mouseX = 100;
+            mouseY = 300;
+        }
 
-        //设置样式
-//        JLabel label = new JLabel("\u6570\u636E\u8F6C\u6362");
-//        label.setBounds(126, 13, 72, 18);
-//        contentPane.add(label);
+        public void setJButton(JButton button) {
+            this.button = button;
+            this.button.setText("对弈开始");
+            kb.setJButton(button);
+        }
+
+        public int getmouseX() {
+            return mouseX;
+        }
+
+        public int getmouseY() {
+            return mouseY;
+        }
+
+        public void paint(Graphics G) {
+            super.paint(G);
+
+            int i;
+            G.setColor(Color.blue);
+
+            for (i = 0; i < 19; i++) {
+                G.drawLine(300, 60 + (30 * i), 840, 60 + (30 * i));
+                G.drawLine(300 + (30 * i), 60, 300 + (30 * i), 600);
+            }
+
+            int[][] a;
+            a = kb.geta();
+
+            int j;
+
+            for (i = 0; i < 19; i++)
+                for (j = 0; j < 19; j++) {
+                    if (a[i][j] == 1) {
+                        G.setColor(Color.WHITE);
+                        G.fillOval(((j * 30) + 300) - 8, ((i * 30) + 60) - 8, 16, 16);
+                    }
+
+                    if (a[i][j] == 2) {
+                        G.setColor(Color.black);
+                        G.fillOval(((j * 30) + 300) - 8, ((i * 30) + 60) - 8, 16, 16);
+                    }
+                }
+
+            g = this.getGraphics();
+        }
+
+//        public void mousePressed(MouseEvent e) {
+//            //Graphics g=getGraphics();
+//            mouseX = e.getX();
+//            mouseY = e.getY();
 //
-//        textField = new JTextField();
-//        textField.setBounds(38, 37, 277, 24);
-//        contentPane.add(textField);
-//        textField.setColumns(10);
+//            if ((mouseX < 300) || (((mouseX % 30) < 25) && ((mouseX % 30) > 5)) ||
+//                    (mouseY < 60) || (((mouseY % 30) > 5) && ((mouseY % 30) < 25))) {
+//                return;
+//            }
 //
-//        radioButton = new JRadioButton("2");
-//        buttonGroup.add(radioButton);
-//        radioButton.setBounds(48, 70, 37, 27);
-//        contentPane.add(radioButton);
+//            if (((mouseX % 30) >= 0) && ((mouseX % 30) <= 5)) {
+//                mouseX = mouseX - (mouseX % 30);
+//            }
+//            else {
+//                mouseX = mouseX - (mouseX % 30) + 30;
+//            }
 //
-//        radioButton_1 = new JRadioButton("8");
-//        buttonGroup.add(radioButton_1);
-//        radioButton_1.setBounds(91, 70, 37, 27);
-//        contentPane.add(radioButton_1);
+//            if (((mouseY % 30) >= 0) && ((mouseY % 30) <= 5)) {
+//                mouseY = mouseY - (mouseY % 30);
+//            }
+//            else {
+//                mouseY = mouseY - (mouseY % 30) + 30;
+//            }
 //
-//        radioButton_2 = new JRadioButton("10");
-//        buttonGroup.add(radioButton_2);
-//        radioButton_2.setBounds(126, 70, 45, 27);
-//        contentPane.add(radioButton_2);
+//            int playerX;
+//            int playerY;
+//            playerY = (mouseX - 300) / 30;
+//            playerX = (mouseY - 60) / 30;
 //
-//        radioButton_3 = new JRadioButton("16");
-//        buttonGroup.add(radioButton_3);
-//        radioButton_3.setBounds(168, 70, 45, 27);
-//        contentPane.add(radioButton_3);
-//
-//        JLabel label_1 = new JLabel("\u8F6C\u6362\u6210");
-//        label_1.setBounds(126, 106, 72, 18);
-//        contentPane.add(label_1);
-//
-//        textField_1 = new JTextField();
-//        textField_1.setEnabled(false);
-//        textField_1.setBounds(38, 135, 277, 24);
-//        contentPane.add(textField_1);
-//        textField_1.setColumns(10);
-//
-//        radioButton_4 = new JRadioButton("16");
-//        buttonGroup_1.add(radioButton_4);
-//        radioButton_4.setBounds(168, 168, 45, 27);
-//        contentPane.add(radioButton_4);
-//
-//        radioButton_5 = new JRadioButton("8");
-//        buttonGroup_1.add(radioButton_5);
-//        radioButton_5.setBounds(91, 168, 37, 27);
-//        contentPane.add(radioButton_5);
-//
-//        radioButton_6 = new JRadioButton("10");
-//        buttonGroup_1.add(radioButton_6);
-//        radioButton_6.setBounds(126, 168, 45, 27);
-//        contentPane.add(radioButton_6);
-//
-//        radioButton_7 = new JRadioButton("2");
-//        buttonGroup_1.add(radioButton_7);
-//        radioButton_7.setBounds(48, 168, 37, 27);
-//        contentPane.add(radioButton_7);
-//
-//        btnOk = new JButton("OK");
-//        btnOk.addActionListener(this);
-//        btnOk.setBounds(58, 213, 82, 27);
-//        contentPane.add(btnOk);
-//
-//        btnExit = new JButton("Exit");
-//        btnExit.addActionListener(this);
-//        btnExit.setBounds(154, 213, 82, 27);
-//        contentPane.add(btnExit);
-//
-//        btnBack = new JButton("Back");
-//        btnBack.addActionListener(this);
-//        btnBack.setBounds(250, 213, 113, 27);
-//        contentPane.add(btnBack);
+//            if (kb.setPlayXY(playerX, playerY)) {
+//                g.setColor(Color.WHITE);
+//                g.fillOval(mouseX - 8, mouseY - 8, 16, 16);
+//                kb.play();
+//                mouseX = (kb.getcomputerY() * 30) + 300;
+//                mouseY = (kb.getcomputerX() * 30) + 60;
+//                g.setColor(Color.black);
+//                g.fillOval(mouseX - 8, mouseY - 8, 16, 16);
+//                kb.condition();
+//            }
+        }
     }
 
     //main方法 启动执行
@@ -129,7 +158,6 @@ public class MainGame extends JFrame implements ActionListener {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    //新建UI 成功则显示
                     MainGame frame = new MainGame();
                     frame.setVisible(true);
                 } catch (Exception e) {
@@ -195,4 +223,54 @@ public class MainGame extends JFrame implements ActionListener {
 //        mm.setVisible(true);
 //        this.setVisible(false);
 //    }
+
+
+   //打印棋盘
+    public void printboard() {
+        int i;int j;
+        System.out.printf("    ");
+        for (i = 0; i < N; i++)
+            System.out.printf("%2d", i);
+        System.out.println();
+        System.out.println("    ———————————————————————————————————————");
+        for (i = 0; i < N; i++) {
+            System.out.printf("%2d | ", i);
+            for (j = 0; j < N; j++)
+                switch (a[i][j]) {
+                case 0:
+                    System.out.print("+ ");
+                    break;
+                case 1:
+                    System.out.print("o ");
+                    break;
+                case 2:
+                    System.out.print("● ");
+                    break;
+                }
+            System.out.println("|");
+        }
+        System.out.println("    ———————————————————————————————————————");
+        System.out.printf("    ");
+        for (i = 0; i < N; i++)
+            System.out.printf("%2d", i);
+        System.out.printf("\n");
+    }
+
+    //判断输赢
+//    public void judge() {
+//        int[] b1 = { 1, 1, 1, 1, 1 };
+//        int[] b2 = { 2, 2, 2, 2, 2 };
+//        int[] r;
+//        r = BF(b1);
+//        if (r[0] != 0) {
+//            flag = 1;
+//        }
+//        r = BF(b2);
+//        if (r[0] != 0) {
+//            flag = 2;
+//        }
+//    }
+
+
+
 }
