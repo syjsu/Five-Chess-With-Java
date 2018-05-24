@@ -69,7 +69,7 @@ public class Game {
         //设置按钮
         public void setJButton(JButton button) {
             this.button = button;
-            this.button.setText("对弈开始");
+            this.button.setText("开始游戏");
             kb.setJButton(button);
         }
 
